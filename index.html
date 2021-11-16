@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <h1>Vue js is the name of the framework</h1>
+    <div id="app">
+        {{ message }}<br>
+        <button v-on:click="toggleAdd">Add a Michael</button>
+        <div v-if="showAdd">
+            <p>Name: <input v-model="newmichael.name" type="text"></p>
+            <p>Picture: <input v-model="newmichael.picture" type="text"></p>
+            <button v-on:click="save">Save</button>
+        </div>
+        <div v-for="michael in michaels">
+            <p>{{ michael.name }}</p><br>
+            <img v-if="show" v-bind:src="michael.picture" alt="Picture">
+        </div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                showAdd: false,
+                newmichael:{
+                    name: '',
+                    picture: '',
+                },
+                michaels:[
+                    {
+                        picture: 'https://variety.com/wp-content/uploads/2015/07/vsauce-famechangers.jpg?crop=0px%2C10px%2C1000px%2C557px&resize=450%2C253'
+                    },
+                    {
+                        name: 'And Here!',
+                        picture: 'https://upload.wikimedia.org/wikipedia/commons/b/b4/Michael_Stevens_VidCon_2016.jpg'
+                    },
+                    {
+                        name: 'And Here!',
+                        picture: 'https://biographygist.com/wp-content/uploads/2021/07/Vsauce-1.jpg'
+                    },
+                    {
+                        name: 'And Here!',
+                        picture: 'https://yt3.ggpht.com/ytc/AKedOLSCpbn6_3KOR7zAuqaS9fXtX7JAb0AQ6Y_f33ohog=s900-c-k-c0x00ffffff-no-rj'
+                    },
+                    {
+                        name: 'Wait, that\'s not a Michael!',
+                        picture: 'https://i.pinimg.com/originals/7c/01/60/7c01600dfdb91026fcfa1827642b289a.jpg'
+                    }
+                ],
+                show: true,
+                message: 'Hey Vsauce, Michael here!'
+            },
+            methods:{
+                toggleAdd(){this.showAdd = !this.showAdd;},
+                save() { this.michaels.push( {...this.newmichael} ) },
+
+                f1: function(){console.log(this)},
+                f2: ()=> {console.log(this)}, /* returns Window (and not Vue)*/
+                f3() {console.log(this)} 
+            }           
+        });
+        
+    </script>
+</body>
+</html>

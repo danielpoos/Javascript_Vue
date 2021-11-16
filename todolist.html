@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todolist</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <style>
+        body{
+            font-family: 'Consolas', Courier, monospace;
+        }
+        ul{
+            list-style-type: none;
+        }
+        .done{
+            text-decoration: line-through;
+        }
+        .hide .done{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Things you gotta get done</h2>
+    <div id="app">
+        <button v-on:click="deleteAllDone">Delete all done</button><input v-model="hideAllDone" type="checkbox">Hide all done
+    <ul><li v-for="listItems in list" v-bind:class="{done:listItems.done}" v-if="!hideAllDone || !listItems.done">
+        <input v-model="listItems.done" type="checkbox">{{listItems.item}}<span v-on:click="deleteFromList(listItems.item)"> X</span>
+    </li></ul>
+    <input v-model="newItem.item" type="text" placeholder="What do you need to do today?">
+    <button v-on:click="addToList" >Add to list</button>
+    <br>
+    <img v-bind:src="xd">
+    </div>
+    <script>
+        var app = new Vue({
+        el: '#app',
+        data: {
+            hideAllDone: false,
+            xd: 'https://i.redd.it/t4b5ze12rbn41.jpg',
+            newItem:{
+                item: '',
+                done: false
+            },
+            list:[
+                {
+                    item:'Something to do',
+                    done: false
+                },
+                {
+                    item:'Another thing to do',
+                    done: false
+                }
+            ]
+        },
+        methods:{
+            addToList(){
+                this.list.push({...this.newItem});
+                this.newItem.item = '';
+            },
+            deleteFromList(item){
+                this.list = this.list.filter(function(title){
+                    return title.item != item;
+                })
+            },
+            deleteAllDone(item){
+                this.list = this.list.filter(function(title){
+                    return !title.done;
+                })
+            }
+        }           
+    });
+    </script>
+</body>
+</html>
